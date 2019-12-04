@@ -1,0 +1,2 @@
+*.py[aoc]
+__pycache__
