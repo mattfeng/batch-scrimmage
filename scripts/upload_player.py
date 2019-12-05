@@ -165,9 +165,9 @@ def upload_binary_to_custom_s3_bucket(botname, filepath, zipfile, bucket):
         zip_obj = '{}-src.zip'.format(botname)
 
     try:
-        s3_client.upload_file(filepath, bucket, binary_obj)
+        s3_client.upload_file(filepath, bucket, binary_obj, ExtraArgs = {'ACL': 'public-read'})
         if zipfile is not None:
-            s3_client.upload_file(zipfile, bucket, zip_obj)
+            s3_client.upload_file(zipfile, bucket, zip_obj, ExtraArgs = {'ACL': 'public-read'})
     except ClientError as e:
         error('Uploading binary and source to custom S3 failed.')
         print(e)
@@ -217,8 +217,8 @@ def main(binary, srcpath, botname, botdesc):
     upload_binary_to_custom_s3_bucket(botname, binary, zip_path, CUSTOM_S3_BUCKET)
 
     # Upload binary to 6.172 S3 bucket
-    #test_6172_s3_bucket_valid()
-    #upload_binary_to_6172_s3_bucket(botname, binary, iam_user, athena_user)
+    test_6172_s3_bucket_valid()
+    upload_binary_to_6172_s3_bucket(botname, binary, iam_user, athena_user)
 
     # Register bot with custom database
     add_player_to_db(botname, official_name, botdesc)
