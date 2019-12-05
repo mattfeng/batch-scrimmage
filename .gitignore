@@ -1,2 +1,6 @@
 *.py[aoc]
 __pycache__
+
+# any secrets should not be published
+secrets.json
+creds.json
